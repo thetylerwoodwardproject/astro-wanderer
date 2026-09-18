@@ -770,6 +770,7 @@ html[data-theme='dark'] .badge { color: var(--accent); }
 }
 
 .post-card {
+  position: relative;
   display: block;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -788,6 +789,21 @@ html[data-theme='dark'] .badge { color: var(--accent); }
 }
 
 .post-card h3 { margin: 0.3rem 0 0.4rem; }
+
+/* The title link is stretched to cover the whole card (a "stretched link"),
+   so the card still reads as one big click target now that other
+   interactive elements — like the audio player's play button — can live
+   inside it without nesting inside an <a>. */
+.post-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-card h3 a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
 
 .post-card .post-sub { color: var(--muted); margin: 0 0 0.75rem; }
 
@@ -1260,6 +1276,173 @@ body.has-deck .site-footer {
 }
 
 .theme-toggle:hover { border-color: var(--accent); transform: rotate(12deg); }
+
+/* Podcast platform links — same pill treatment as .social-link, tinted with
+   the secondary accent on hover so the row reads as a distinct group. */
+.hero-podcast-links {
+  margin-bottom: 1.5rem;
+}
+
+.podcast-link:hover {
+  color: var(--accent-2);
+  border-color: var(--accent-2);
+}
+
+/* ==========================================================================
+   Audio player
+   ========================================================================== */
+
+.audio-player {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  --progress: 0%;
+}
+
+.audio-player.compact {
+  gap: 0.6rem;
+  padding: 0.6rem 0.85rem;
+  margin: 1rem 0 0;
+}
+
+.audio-player audio { display: none; }
+
+.audio-play-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(120deg, var(--accent), var(--accent-strong));
+  color: var(--on-accent);
+  box-shadow: 0 8px 20px -8px var(--accent-glow);
+  transition: transform 0.15s ease;
+}
+
+.audio-player.compact .audio-play-btn {
+  width: 2rem;
+  height: 2rem;
+  box-shadow: none;
+}
+
+.audio-play-btn:hover { transform: translateY(-1px); }
+
+.audio-play-btn .icon-pause { display: none; }
+.audio-player.is-playing .audio-play-btn .icon-play { display: none; }
+.audio-player.is-playing .audio-play-btn .icon-pause { display: inline-flex; }
+
+.audio-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.audio-title {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.audio-time {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  flex-shrink: 0;
+  min-width: 2.4em;
+}
+
+.audio-scrubber {
+  flex: 1;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--accent) var(--progress), var(--border) var(--progress));
+  cursor: pointer;
+}
+
+.audio-scrubber::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--accent);
+  transition: transform 0.15s ease;
+}
+
+.audio-scrubber:hover::-webkit-slider-thumb,
+.audio-scrubber:active::-webkit-slider-thumb { transform: scale(1.15); }
+
+.audio-scrubber::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  cursor: pointer;
+}
+
+.audio-scrubber::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+.audio-skip-btn,
+.audio-speed-btn,
+.audio-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.audio-skip-btn:hover,
+.audio-speed-btn:hover,
+.audio-download:hover { color: var(--accent); }
+
+.audio-speed-btn {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  min-width: 2.4em;
+}
+
+.audio-extras {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audio-play-btn,
+  .audio-scrubber::-webkit-slider-thumb {
+    transition: none;
+  }
+}
 
 /* ==========================================================================
    Responsive

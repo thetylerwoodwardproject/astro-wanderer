@@ -16,6 +16,17 @@ const blog = defineCollection({
     author: z.string().default('Rowan Hale'),
     mathjax: z.boolean().default(false),
     draft: z.boolean().default(false),
+    audio: z
+      .object({
+        /** MP3 URL — a /public path like "/audio/ep-01.mp3" or a podcast host's CDN link */
+        src: z.string(),
+        /** Duration in seconds, shown before the browser loads metadata */
+        duration: z.number().optional(),
+        episode: z.number().optional(),
+        /** Defaults to the post title when omitted */
+        title: z.string().optional(),
+      })
+      .optional(),
   }),
 });
 

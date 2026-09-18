@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+
 export interface Props {
   items: string[];
   title: string;
@@ -39,7 +41,7 @@ const isVideoJson = JSON.stringify(items.map(isVideo));
         items.map((src, i) =>
           isVideo(src) ? (
             <button class="carousel-thumb" data-index={i} type="button" aria-label={`Slide ${i + 1}`}>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              <Icon name="play" size={20} />
             </button>
           ) : (
             <button class="carousel-thumb" data-index={i} type="button" aria-label={`Slide ${i + 1}`}>

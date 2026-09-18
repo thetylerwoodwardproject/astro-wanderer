@@ -1,6 +1,7 @@
 ---
 import Layout from '../../components/Layout.astro';
 import Icon from '../../components/Icon.astro';
+import AudioPlayer from '../../components/AudioPlayer.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { site, withBase } from '../../data/site';
@@ -83,6 +84,16 @@ const jsonLd = {
 
       {post.data.coverImage && (
         <img src={withBase(post.data.coverImage)} alt={post.data.title} style="border-radius: var(--radius-lg); margin: 2rem 0; width: 100%; object-fit: cover; max-height: 420px;" />
+      )}
+
+      {post.data.audio && (
+        <AudioPlayer
+          src={withBase(post.data.audio.src)}
+          title={post.data.audio.title ?? post.data.title}
+          duration={post.data.audio.duration}
+          variant="full"
+          class="audio-player-post"
+        />
       )}
 
       <div class="prose" style="margin-top: 2rem;">

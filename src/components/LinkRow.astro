@@ -1,0 +1,33 @@
+---
+import { withBase } from '../data/site';
+import type { SocialLink } from '../data/site';
+import Icon from './Icon.astro';
+
+export interface Props {
+  /** Row heading, shown as an eyebrow above the pills. */
+  heading: string;
+  links: Record<string, SocialLink>;
+  /** Extra class on each pill — e.g. "podcast-link" for the cyan hover tint. */
+  linkClass?: string;
+  class?: string;
+}
+
+const { heading, links, linkClass, class: className } = Astro.props;
+---
+
+<div class={className}>
+  <p class="eyebrow">{heading}</p>
+  <div class="social-row">
+    {Object.values(links).map((s) => (
+      <a
+        class:list={['social-link', linkClass]}
+        href={withBase(s.url)}
+        target={s.url.startsWith('http') ? '_blank' : undefined}
+        rel="noopener"
+      >
+        {s.icon && <Icon name={s.icon} />}
+        {s.label}
+      </a>
+    ))}
+  </div>
+</div>

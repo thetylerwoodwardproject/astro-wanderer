@@ -17,11 +17,9 @@ const personJsonLd = {
     '@type': 'PostalAddress',
     addressLocality: site.author.location,
   },
-  sameAs: [
-    site.socials.github.url,
-    site.socials.linkedin.url,
-    ...(site.socials.instagram ? [site.socials.instagram.url] : []),
-  ],
+  sameAs: [...Object.values(site.socials), ...Object.values(site.podcast.links)]
+    .map((s) => s.url)
+    .filter((url) => url.startsWith('http')),
   knowsAbout: skillGroups.flatMap((g) => g.skills).slice(0, 8),
 };
 ---
