@@ -32,7 +32,10 @@ export const site = {
     /** Optional: link to a PDF résumé served from /public */
     resume: '/resume/Resume.pdf',
   },
-  /** Shown in the hero and footer. Delete a line to remove it from both places.
+  /** Shown in the "Connect on" row in the hero, and in the footer. Delete a
+   *  line to remove it from both places. The hero row itself drops `rss`
+   *  (it already sits right below the podcast feed link) but the footer
+   *  keeps every entry.
    *  `icon` is any name from src/components/Icon.astro */
   socials: {
     github: { url: 'https://github.com', label: 'GitHub', icon: 'github' },
@@ -41,15 +44,16 @@ export const site = {
     email: { url: 'mailto:hello@example.com', label: 'Email', icon: 'email' },
     rss: { url: '/rss.xml', label: 'RSS', icon: 'rss' },
   } satisfies Record<string, SocialLink>,
-  /** Shown in the "Listen on" row (see PodcastLinks.astro). `links.feed` is the
-   *  show's own podcast-host RSS feed — separate from the site's `/rss.xml` above. */
+  /** Shown in the "Listen on" row (see LinkRow.astro, used from Hero.astro).
+   *  `links.feed` is the show's own podcast-host RSS feed — separate from the
+   *  site's `/rss.xml` in `socials` above. */
   podcast: {
     name: 'Your Show Name',
     links: {
       apple: { url: 'https://podcasts.apple.com/', label: 'Apple Podcasts', icon: 'apple-podcasts' },
       spotify: { url: 'https://open.spotify.com/', label: 'Spotify', icon: 'spotify' },
       youtube: { url: 'https://youtube.com/', label: 'YouTube', icon: 'youtube' },
-      feed: { url: 'https://feeds.example.com/show.xml', label: 'RSS Feed', icon: 'podcast' },
+      feed: { url: 'https://feeds.example.com/show.xml', label: 'RSS', icon: 'rss' },
     } satisfies Record<string, SocialLink>,
   },
 };

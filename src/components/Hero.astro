@@ -1,13 +1,19 @@
 ---
 import { typingRoles } from '../data/resume';
 import { site, withBase } from '../data/site';
-import Icon from './Icon.astro';
-import PodcastLinks from './PodcastLinks.astro';
+import LinkRow from './LinkRow.astro';
 
 const rolesJson = JSON.stringify(typingRoles);
 const nameParts = site.author.name.split(' ');
 const firstName = nameParts.shift() ?? '';
 const lastName = nameParts.join(' ');
+
+// The personal "Connect on" row drops RSS — it would sit directly under the
+// podcast feed's RSS pill above and just duplicate it visually. RSS to the
+// site's own feed still lives in the footer.
+const connectSocials = Object.fromEntries(
+  Object.entries(site.socials).filter(([key]) => key !== 'rss'),
+);
 ---
 
 <section class="hero">
@@ -25,16 +31,9 @@ const lastName = nameParts.join(' ');
         curious about. Two or three sentences is plenty.
       </p>
 
-      <PodcastLinks class="hero-podcast-links" />
+      <LinkRow heading="Listen on" links={site.podcast.links} linkClass="podcast-link" class="hero-podcast-links" />
 
-      <div class="social-row">
-        {Object.values(site.socials).map((s) => (
-          <a class="social-link" href={withBase(s.url)} target={s.url.startsWith('http') ? '_blank' : undefined} rel="noopener">
-            {s.icon && <Icon name={s.icon} />}
-            {s.label}
-          </a>
-        ))}
-      </div>
+      <LinkRow heading="Connect on" links={connectSocials} />
     </div>
 
     <img class="hero-avatar" src={withBase('/img/avatar.svg')} alt={`Portrait of ${site.author.name}`} width="220" height="220" />
