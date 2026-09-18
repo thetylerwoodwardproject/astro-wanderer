@@ -1,14 +1,14 @@
-# Astro Wanderer
+# Astro Podcaster
 
 A personal site theme for [Astro](https://astro.build) — portfolio, blog, and travel photo galleries in one quiet, fast template.
 
 **[Live demo](https://igagansingh.com/astro-wanderer)**
 
-![Astro Wanderer homepage](screenshot.png)
+![Astro Podcaster homepage](screenshot.png)
 
-## Why Wanderer
+## Why Astro Podcaster
 
-Most developer portfolios stop at the work page. Wanderer is built around the idea that a good personal site shows what you're like *when you're not working* — so it ships with a travel section where every trip is a story with a photo carousel and lightbox, right next to your résumé and blog.
+Most developer portfolios stop at the work page. This theme is built around the idea that a good personal site shows what you're like *when you're not working* — so it ships with a travel section where every trip is a story with a photo carousel and lightbox, right next to your résumé and blog, plus podcast platform links and a themed audio player for episode posts.
 
 ## Features
 
