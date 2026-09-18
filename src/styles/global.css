@@ -13,10 +13,12 @@
   --text-strong: #09090b;
   --muted: #52525b;
   --border: #e4e4e7;
-  --accent: #2563eb;
-  --accent-strong: #1d4ed8;
+  /* Brand green (#c0ff00) darkened to the same hue for readable text on a
+     light background — see the dark theme below for the literal brand color. */
+  --accent: #547000;
+  --accent-strong: #415700;
   --accent-2: #0891b2;
-  --accent-glow: rgba(37, 99, 235, 0.18);
+  --accent-glow: rgba(192, 255, 0, 0.18);
   --on-accent: #ffffff;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.14);
@@ -30,18 +32,20 @@
 }
 
 html[data-theme='dark'] {
-  --bg: #0b0f1a;
-  --surface: #111827;
-  --surface-2: #1a2234;
-  --text: #d4d4d8;
-  --text-strong: #f4f4f5;
-  --muted: #9ca3af;
-  --border: #262e3f;
-  --accent: #60a5fa;
-  --accent-strong: #93c5fd;
+  --bg: #1c1c1c;
+  --surface: #262626;
+  --surface-2: #303030;
+  --text: #e5e5e5;
+  --text-strong: #fafafa;
+  --muted: #a3a3a3;
+  --border: #3d3d3d;
+  /* The literal brand green — huge contrast against the near-black
+     background (~14:1), so it stays exact here unlike the light theme. */
+  --accent: #c0ff00;
+  --accent-strong: #dfff80;
   --accent-2: #22d3ee;
-  --accent-glow: rgba(96, 165, 250, 0.22);
-  --on-accent: #0b0f1a;
+  --accent-glow: rgba(192, 255, 0, 0.22);
+  --on-accent: #1c1c1c;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 24px 48px -16px rgba(0, 0, 0, 0.6);
@@ -443,13 +447,13 @@ th {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(2px 2px at 20% 30%, var(--star, rgba(37, 99, 235, 0.35)) 50%, transparent 51%),
+    radial-gradient(2px 2px at 20% 30%, var(--star, rgba(192, 255, 0, 0.35)) 50%, transparent 51%),
     radial-gradient(1.5px 1.5px at 40% 70%, var(--star, rgba(8, 145, 178, 0.3)) 50%, transparent 51%),
-    radial-gradient(1px 1px at 60% 20%, var(--star, rgba(37, 99, 235, 0.28)) 50%, transparent 51%),
+    radial-gradient(1px 1px at 60% 20%, var(--star, rgba(192, 255, 0, 0.28)) 50%, transparent 51%),
     radial-gradient(2px 2px at 80% 55%, var(--star, rgba(8, 145, 178, 0.32)) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 90% 85%, var(--star, rgba(37, 99, 235, 0.3)) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 90% 85%, var(--star, rgba(192, 255, 0, 0.3)) 50%, transparent 51%),
     radial-gradient(1px 1px at 15% 85%, var(--star, rgba(8, 145, 178, 0.3)) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 70% 90%, var(--star, rgba(37, 99, 235, 0.25)) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 70% 90%, var(--star, rgba(192, 255, 0, 0.25)) 50%, transparent 51%),
     radial-gradient(1px 1px at 30% 10%, var(--star, rgba(8, 145, 178, 0.25)) 50%, transparent 51%);
   opacity: 0.5;
   pointer-events: none;
