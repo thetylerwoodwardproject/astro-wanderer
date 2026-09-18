@@ -1,0 +1,168 @@
+---
+import Icon from './Icon.astro';
+
+export interface Props {
+  src: string;
+  title: string;
+  /** Duration in seconds, shown before the browser has loaded metadata. */
+  duration?: number;
+  variant?: 'full' | 'compact';
+  class?: string;
+}
+
+const { src, title, duration, variant = 'full', class: className } = Astro.props;
+
+const formatTime = (totalSeconds?: number): string => {
+  if (totalSeconds == null || Number.isNaN(totalSeconds) || totalSeconds < 0) return '--:--';
+  const m = Math.floor(totalSeconds / 60);
+  const s = Math.floor(totalSeconds % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+};
+---
+
+<div
+  class={`audio-player ${variant === 'compact' ? 'compact' : ''} ${className ?? ''}`.trim()}
+  data-audio-player
+  data-duration={duration ?? ''}
+>
+  <audio preload="metadata" data-audio-el src={src}></audio>
+
+  <button type="button" class="audio-play-btn" data-audio-play aria-label={`Play ${title}`}>
+    <Icon name="play" size={variant === 'compact' ? 16 : 20} class="icon-play" />
+    <Icon name="pause" size={variant === 'compact' ? 16 : 20} class="icon-pause" />
+  </button>
+
+  <div class="audio-body">
+    {variant === 'full' && <p class="audio-title">{title}</p>}
+
+    <div class="audio-controls">
+      {variant === 'full' && (
+        <button type="button" class="audio-skip-btn" data-audio-skip="-15" aria-label="Back 15 seconds">
+          <Icon name="skip-back" size={16} />
+        </button>
+      )}
+
+      <span class="audio-time" data-audio-current>0:00</span>
+
+      <input
+        type="range"
+        class="audio-scrubber"
+        data-audio-scrubber
+        min="0"
+        max="100"
+        value="0"
+        step="0.1"
+        aria-label={`Seek ${title}`}
+      />
+
+      <span class="audio-time" data-audio-duration>{formatTime(duration)}</span>
+
+      {variant === 'full' && (
+        <button type="button" class="audio-skip-btn" data-audio-skip="30" aria-label="Forward 30 seconds">
+          <Icon name="skip-forward" size={16} />
+        </button>
+      )}
+    </div>
+  </div>
+
+  {variant === 'full' && (
+    <div class="audio-extras">
+      <button type="button" class="audio-speed-btn" data-audio-speed aria-label="Playback speed">1×</button>
+      <a class="audio-download" href={src} download aria-label={`Download ${title}`}>
+        <Icon name="download" size={16} />
+      </a>
+    </div>
+  )}
+</div>
+
+<script>
+  const SPEEDS = [1, 1.25, 1.5, 2];
+
+  const formatTime = (totalSeconds: number): string => {
+    if (Number.isNaN(totalSeconds) || totalSeconds < 0) return '--:--';
+    const m = Math.floor(totalSeconds / 60);
+    const s = Math.floor(totalSeconds % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const players = document.querySelectorAll<HTMLElement>('[data-audio-player]');
+
+  players.forEach((root) => {
+    const audio = root.querySelector<HTMLAudioElement>('[data-audio-el]');
+    const playBtn = root.querySelector<HTMLButtonElement>('[data-audio-play]');
+    const scrubber = root.querySelector<HTMLInputElement>('[data-audio-scrubber]');
+    const currentEl = root.querySelector<HTMLElement>('[data-audio-current]');
+    const durationEl = root.querySelector<HTMLElement>('[data-audio-duration]');
+    const speedBtn = root.querySelector<HTMLButtonElement>('[data-audio-speed]');
+    const skipBtns = root.querySelectorAll<HTMLButtonElement>('[data-audio-skip]');
+    if (!audio || !playBtn || !scrubber) return;
+
+    const fallbackDuration = Number(root.dataset.duration) || undefined;
+    let speedIndex = 0;
+    let scrubbing = false;
+
+    const setPlaying = (playing: boolean) => {
+      root.classList.toggle('is-playing', playing);
+      playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    };
+
+    const updateDurationDisplay = () => {
+      const total = Number.isFinite(audio.duration) ? audio.duration : fallbackDuration;
+      if (durationEl && total != null) durationEl.textContent = formatTime(total);
+    };
+
+    audio.addEventListener('loadedmetadata', updateDurationDisplay);
+    updateDurationDisplay();
+
+    audio.addEventListener('timeupdate', () => {
+      if (currentEl) currentEl.textContent = formatTime(audio.currentTime);
+      const total = Number.isFinite(audio.duration) ? audio.duration : fallbackDuration;
+      if (total && !scrubbing) {
+        const pct = (audio.currentTime / total) * 100;
+        scrubber.value = String(pct);
+        root.style.setProperty('--progress', `${pct}%`);
+      }
+    });
+
+    audio.addEventListener('play', () => {
+      // Only one player plays at a time.
+      players.forEach((other) => {
+        if (other !== root) other.querySelector<HTMLAudioElement>('[data-audio-el]')?.pause();
+      });
+      setPlaying(true);
+    });
+    audio.addEventListener('pause', () => setPlaying(false));
+    audio.addEventListener('ended', () => setPlaying(false));
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    scrubber.addEventListener('input', () => {
+      scrubbing = true;
+      const total = Number.isFinite(audio.duration) ? audio.duration : fallbackDuration;
+      if (total) {
+        const pct = Number(scrubber.value);
+        root.style.setProperty('--progress', `${pct}%`);
+        audio.currentTime = (pct / 100) * total;
+      }
+    });
+    scrubber.addEventListener('change', () => {
+      scrubbing = false;
+    });
+
+    skipBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const delta = Number(btn.dataset.audioSkip) || 0;
+        audio.currentTime = Math.max(0, audio.currentTime + delta);
+      });
+    });
+
+    speedBtn?.addEventListener('click', () => {
+      speedIndex = (speedIndex + 1) % SPEEDS.length;
+      audio.playbackRate = SPEEDS[speedIndex];
+      speedBtn.textContent = `${SPEEDS[speedIndex]}×`;
+    });
+  });
+</script>

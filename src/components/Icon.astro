@@ -1,6 +1,8 @@
 ---
+import type { IconName } from '../data/icons';
+
 export interface Props {
-  name: 'github' | 'linkedin' | 'instagram' | 'email' | 'rss' | 'download' | 'arrow-right' | 'arrow-left' | 'sun' | 'moon';
+  name: IconName;
   size?: number;
   class?: string;
 }
@@ -69,5 +71,48 @@ const { name, size = 20, class: className } = Astro.props;
 {name === 'moon' && (
   <svg class={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+  </svg>
+)}
+{name === 'apple-podcasts' && (
+  <svg class={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 4.2a4.6 4.6 0 0 1 4.6 4.6c0 1.5-.75 2.83-1.9 3.63.1.55.15 1.12.15 1.7a9.6 9.6 0 0 1-.42 2.8.7.7 0 0 1-1.34-.4c.25-.8.38-1.6.38-2.4 0-.5-.05-1-.15-1.47a.7.7 0 0 1 .35-.77 3.2 3.2 0 0 0 1.63-2.79A3.2 3.2 0 0 0 12 5.6a3.2 3.2 0 0 0-3.2 3.2c0 1.15.62 2.2 1.62 2.79a.7.7 0 0 1 .35.77c-.1.47-.15.97-.15 1.47 0 .8.13 1.6.38 2.4a.7.7 0 0 1-1.34.4 9.6 9.6 0 0 1-.42-2.8c0-.58.05-1.15.15-1.7A4.58 4.58 0 0 1 7.4 8.8 4.6 4.6 0 0 1 12 4.2zm0 3.1a1.5 1.5 0 0 1 1.5 1.5c0 .55-.28 1.03-.7 1.3.32.9.5 1.87.5 2.87 0 1.9-.65 3.83-1.05 4.98a.25.25 0 0 1-.5 0c-.4-1.15-1.05-3.08-1.05-4.98 0-1 .18-1.97.5-2.87-.42-.27-.7-.75-.7-1.3A1.5 1.5 0 0 1 12 7.3z" />
+  </svg>
+)}
+{name === 'spotify' && (
+  <svg class={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3a.75.75 0 0 1-1.03.26c-2.82-1.72-6.37-2.11-10.55-1.16a.75.75 0 0 1-.33-1.46c4.58-1.04 8.5-.6 11.65 1.32.36.22.47.68.26 1.04zm1.47-3.27a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.56-11.97-1.4a.94.94 0 0 1-.55-1.8c4.37-1.33 9.8-.68 13.5 1.6.44.27.58.85.31 1.29zm.13-3.4C15.6 8.3 8.9 8.08 5.4 9.15a1.13 1.13 0 0 1-.66-2.16c4-1.22 11.4-.96 15.5 1.47a1.13 1.13 0 0 1-1.14 1.96l-.5-.29z" />
+  </svg>
+)}
+{name === 'youtube' && (
+  <svg class={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M23.5 6.19a2.96 2.96 0 0 0-2.08-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.42.49a2.96 2.96 0 0 0-2.08 2.1C0 8.13 0 12 0 12s0 3.87.5 5.81a2.96 2.96 0 0 0 2.08 2.1c1.92.49 9.42.49 9.42.49s7.5 0 9.42-.49a2.96 2.96 0 0 0 2.08-2.1C24 15.87 24 12 24 12s0-3.87-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z" />
+  </svg>
+)}
+{name === 'podcast' && (
+  <svg class={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 2a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4zm-6 9a1 1 0 0 0-2 0 8 8 0 0 0 7 7.94V21H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2.06A8 8 0 0 0 20 11a1 1 0 0 0-2 0 6 6 0 0 1-12 0z" />
+  </svg>
+)}
+{name === 'play' && (
+  <svg class={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M6 4.5v15a1 1 0 0 0 1.5.87l13-7.5a1 1 0 0 0 0-1.74l-13-7.5A1 1 0 0 0 6 4.5z" />
+  </svg>
+)}
+{name === 'pause' && (
+  <svg class={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <rect x="6" y="4" width="4" height="16" rx="1" />
+    <rect x="14" y="4" width="4" height="16" rx="1" />
+  </svg>
+)}
+{name === 'skip-back' && (
+  <svg class={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <polygon points="19 20 9 12 19 4 19 20" />
+    <line x1="5" y1="19" x2="5" y2="5" />
+  </svg>
+)}
+{name === 'skip-forward' && (
+  <svg class={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <polygon points="5 4 15 12 5 20 5 4" />
+    <line x1="19" y1="5" x2="19" y2="19" />
   </svg>
 )}

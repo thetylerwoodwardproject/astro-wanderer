@@ -1,19 +1,11 @@
+import type { IconName } from './icons';
+
 /** A link shown in the hero and footer.
  *  `icon` is any name from src/components/Icon.astro */
 export interface SocialLink {
   url: string;
   label: string;
-  icon?:
-    | 'github'
-    | 'linkedin'
-    | 'instagram'
-    | 'email'
-    | 'rss'
-    | 'download'
-    | 'arrow-right'
-    | 'arrow-left'
-    | 'sun'
-    | 'moon';
+  icon?: IconName;
 }
 
 /**
@@ -49,6 +41,17 @@ export const site = {
     email: { url: 'mailto:hello@example.com', label: 'Email', icon: 'email' },
     rss: { url: '/rss.xml', label: 'RSS', icon: 'rss' },
   } satisfies Record<string, SocialLink>,
+  /** Shown in the "Listen on" row (see PodcastLinks.astro). `links.feed` is the
+   *  show's own podcast-host RSS feed — separate from the site's `/rss.xml` above. */
+  podcast: {
+    name: 'Your Show Name',
+    links: {
+      apple: { url: 'https://podcasts.apple.com/', label: 'Apple Podcasts', icon: 'apple-podcasts' },
+      spotify: { url: 'https://open.spotify.com/', label: 'Spotify', icon: 'spotify' },
+      youtube: { url: 'https://youtube.com/', label: 'YouTube', icon: 'youtube' },
+      feed: { url: 'https://feeds.example.com/show.xml', label: 'RSS Feed', icon: 'podcast' },
+    } satisfies Record<string, SocialLink>,
+  },
 };
 
 export type SocialKey = keyof typeof site.socials;

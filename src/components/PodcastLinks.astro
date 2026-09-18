@@ -1,0 +1,29 @@
+---
+import { site, withBase } from '../data/site';
+import Icon from './Icon.astro';
+
+export interface Props {
+  /** Row heading, shown as an eyebrow above the pills. */
+  heading?: string;
+  class?: string;
+}
+
+const { heading = 'Listen on', class: className } = Astro.props;
+---
+
+<div class={className}>
+  <p class="eyebrow">{heading}</p>
+  <div class="social-row">
+    {Object.values(site.podcast.links).map((s) => (
+      <a
+        class="social-link podcast-link"
+        href={withBase(s.url)}
+        target={s.url.startsWith('http') ? '_blank' : undefined}
+        rel="noopener"
+      >
+        {s.icon && <Icon name={s.icon} />}
+        {s.label}
+      </a>
+    ))}
+  </div>
+</div>

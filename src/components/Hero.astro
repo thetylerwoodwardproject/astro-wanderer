@@ -2,6 +2,7 @@
 import { typingRoles } from '../data/resume';
 import { site, withBase } from '../data/site';
 import Icon from './Icon.astro';
+import PodcastLinks from './PodcastLinks.astro';
 
 const rolesJson = JSON.stringify(typingRoles);
 const nameParts = site.author.name.split(' ');
@@ -23,6 +24,8 @@ const lastName = nameParts.join(' ');
         Write a short bio here — who you are, what you build, what you're
         curious about. Two or three sentences is plenty.
       </p>
+
+      <PodcastLinks class="hero-podcast-links" />
 
       <div class="social-row">
         {Object.values(site.socials).map((s) => (
